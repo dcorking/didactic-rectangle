@@ -15,10 +15,17 @@ class Rectangle < ActiveRecord::Base
     where(length: 0..15)
   end
 
-  # area under 15 square metres
+  # area up to 15 square metres
   def self.small
     find_by_sql('SELECT * FROM `rectangles` WHERE '\
                 '(`rectangles`.`length` * `rectangles`.`width` '\
                 'BETWEEN 0.0 AND 15.0)')
+  end
+
+  # area up to a square metres
+  def self.area_lteq(a)
+    find_by_sql('SELECT * FROM `rectangles` WHERE '\
+                '(`rectangles`.`length` * `rectangles`.`width` '\
+                "BETWEEN 0.0 AND #{a})")
   end
 end
